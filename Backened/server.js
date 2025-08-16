@@ -1,7 +1,7 @@
 import express from "express";
 import 'dotenv/config'
-import connectDB from "./config/database.js";
-import questionsRoute from "./routes/questions.js";
+import connectDB from "./src/config/database.js";
+import questionsRoute from "./src/routes/questions.js";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
