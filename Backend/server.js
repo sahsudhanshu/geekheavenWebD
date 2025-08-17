@@ -5,6 +5,7 @@ import questionsRoute from "./src/routes/questions.js";
 import cors from 'cors'
 import { loginUser, registerUser } from "./src/routes/auth.js";
 import user from "./src/routes/user.js";
+import rateLimiter from "./src/utils/rateLimiter.js";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -17,11 +18,11 @@ app.get('/', (req, res) => {
 })
 
 app.use(cors())
-app.use(express.json()); 
+app.use(express.json());
 app.use('/api/v1/questions', questionsRoute)
-app.use('/api/v1/auth/register', registerUser)
-app.use('/api/v1/auth/login', loginUser)
-app.use('/api/v1/user',user)
+app.use('/api/v1/auth/register', rateLimiter(), registerUser)
+app.use('/api/v1/auth/login', rateLimiter(), loginUser)
+app.use('/api/v1/user', user)
 
 connectDB(MONGODB_CONNECTION_URI, DB_NAME).then(() => {
     app.listen(PORT, () => {
