@@ -22,10 +22,11 @@ export interface Question {
     _id: string;
     title: string;
     url: string;
-    category: {
-        _id: string;
-        title: string;
-    };
+}
+export interface Category {
+    _id: string;
+    title: string;
+    questions: string[]
 }
 
 export interface ApiResponse {

@@ -21,17 +21,15 @@ const Navbar: React.FC<NavbarProps> = ({ navigate }) => {
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-16">
                     <div className="flex-shrink-0">
-                        <button onClick={() => navigate('home')} className="text-2xl font-bold text-gray-800">
+                        <button onClick={() => navigate('home')} className="transition-transform duration-500 ease-in-out transform hover:scale-125 text-2xl font-bold text-gray-800">
                             GeekHeaven
                         </button>
                     </div>
-
-                    {/* Right side: Desktop Menu Links */}
                     <div className="hidden md:flex items-center space-x-4">
                         {userInfo ? (
                             <>
                                 <span className="text-gray-700">Welcome, {userInfo.name}</span>
-                                <button onClick={() => navigate('dashboard')} className="text-gray-600 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium">
+                                <button onClick={() => navigate('dashboard')} className="text-gray-600 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium ">
                                     Dashboard
                                 </button>
                                 <button onClick={handleLogout} className="text-gray-600 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium">
@@ -40,17 +38,15 @@ const Navbar: React.FC<NavbarProps> = ({ navigate }) => {
                             </>
                         ) : (
                             <>
-                                <button onClick={() => navigate('login')} className="text-gray-600 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium">
+                                <button onClick={() => navigate('login')} className="text-gray-600 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium transition-transform duration-500 ease-in-out transform hover:scale-125">
                                     Login
                                 </button>
-                                <button onClick={() => navigate('register')} className="text-white bg-indigo-600 hover:bg-indigo-700 px-3 py-2 rounded-md text-sm font-medium">
+                                <button onClick={() => navigate('register')} className="text-white bg-indigo-600 hover:bg-indigo-700 px-3 py-2 rounded-md text-sm font-medium transition-transform duration-500 ease-in-out transform hover:scale-125">
                                     Register
                                 </button>
                             </>
                         )}
                     </div>
-
-                    {/* ... Mobile Menu Button (Hamburger) is the same ... */}
                     <div className="md:hidden flex items-center">
                         <button
                             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -62,8 +58,6 @@ const Navbar: React.FC<NavbarProps> = ({ navigate }) => {
                     </div>
                 </div>
             </div>
-
-            {/* Mobile Menu Dropdown */}
             {isMenuOpen && (
                 <div className="md:hidden">
                     <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
