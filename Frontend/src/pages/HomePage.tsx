@@ -36,7 +36,7 @@ const HomePage: React.FC = () => {
             </header>
             
             {/* This is the new list view */}
-            <div className="w-full max-w-4xl mx-auto bg-white border border-gray-200 rounded-lg shadow-sm">
+            <div className="w-full max-w-4xl mx-auto border border-gray-200 rounded-lg shadow-sm">
                 <div className="p-2">
                     {questions.map(question => (
                         <QuestionItem key={question._id} question={question} />

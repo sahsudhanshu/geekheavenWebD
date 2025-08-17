@@ -8,6 +8,7 @@ import type { UserInfo } from './types.ts';
 import { AuthContextProvider } from './context/AuthContext.tsx'
 import { getUserData, toggleBookmarkedApi, toggleCompletedApi } from './api/index.ts';
 import DashboardPage from './pages/DashboardPage.tsx';
+import AnimatedBlobBackground from './components/BgDesign.tsx'
 
 function App() {
   const [currentPage, setCurrentPage] = useState<Page>('home');
@@ -99,6 +100,7 @@ function App() {
     <AuthContextProvider value={{ userInfo, login, logout, toggleCompleted, toggleBookmark, completedQues, bookmarkedQues, loading }}>
       <div className="min-h-screen">
         <Navbar navigate={navigate} />
+        <AnimatedBlobBackground />
         <main>
           {renderPage()}
         </main>
