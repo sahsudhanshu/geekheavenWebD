@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import type { NavigateFunction } from '../types';
+import { useAuth } from '../context/AuthContext';
+import { loginUser } from '../api';
 
 type LoginPageProps = {
     navigate: NavigateFunction;
@@ -9,9 +11,23 @@ const LoginPage: React.FC<LoginPageProps> = ({ navigate }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const { userInfo, login } = useAuth()
+
+    useEffect(() => {
+        if (userInfo) {
+            navigate('home')
+        }
+    }, [navigate,userInfo])
+
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log('Login attempt with:', { email, password });
+        try {
+            const { data } = await loginUser(email, password);
+            login(data);
+            navigate('home');
+        } catch (error) {
+            console.error('Failed to login', error);
+        }
     };
 
     return (

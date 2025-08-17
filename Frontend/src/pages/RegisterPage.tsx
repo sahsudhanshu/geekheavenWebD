@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import type { NavigateFunction } from '../types';
+import { useAuth } from '../context/AuthContext';
+import { registerUser } from '../api';
 
 type RegisterPageProps = {
     navigate: NavigateFunction;
@@ -10,9 +12,30 @@ const RegisterPage: React.FC<RegisterPageProps> = ({ navigate }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const { userInfo, login } = useAuth()
+
+    useEffect(() => {
+        if (userInfo) {
+            navigate('home')
+        }
+    }, [navigate, userInfo])
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         console.log('Registering with:', { name, email, password });
+
+        if (password.length < 6) {
+            alert('Password must be at least 6 characters');
+            return;
+        }
+
+        try {
+            const { data } = await registerUser(name, email, password)
+            login(data)
+            navigate('home')
+            return;
+        } catch (e) {
+            console.log(e)
+        }
     };
 
     return (
@@ -30,7 +53,6 @@ const RegisterPage: React.FC<RegisterPageProps> = ({ navigate }) => {
                     </p>
                 </div>
                 <form className="mt-8 space-y-6 bg-white p-8 shadow-lg rounded-lg" onSubmit={handleSubmit}>
-                    {/* ... form inputs are the same as before ... */}
                     <div className="rounded-md shadow-sm -space-y-px">
                         <div>
                             <input id="name" name="name" type="text" required className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />

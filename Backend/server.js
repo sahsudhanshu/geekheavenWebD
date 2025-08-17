@@ -16,9 +16,10 @@ app.get('/', (req, res) => {
 })
 
 app.use(cors())
+app.use(express.json()); 
 app.use('/api/v1/questions', questionsRoute)
-app.use('api/v1/auth/register', registerUser)
-app.use('api/v1/auth/login', loginUser)
+app.use('/api/v1/auth/register', registerUser)
+app.use('/api/v1/auth/login', loginUser)
 
 connectDB(MONGODB_CONNECTION_URI, DB_NAME).then(() => {
     app.listen(PORT, () => {

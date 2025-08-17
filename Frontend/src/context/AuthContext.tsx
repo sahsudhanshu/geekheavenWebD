@@ -1,10 +1,14 @@
-import { createContext, useContext } from "react";
-import type { AuthContextType } from "../types";
+import React, { createContext, useContext } from "react";
+import type { AuthContextType, UserInfo } from "../types";
 
-const AuthContext = createContext<AuthContextType | null>(null);
+const AuthContext = createContext<AuthContextType>({
+    userInfo: null,
+    login: (userData: UserInfo) => { },
+    logout: () => { }
+});
 
 export const useAuth = () => {
-    return useContext(AuthContext)
+    return useContext(AuthContext);
 }
 
-export const TodoContextProvider = AuthContext.Provider
+export const AuthContextProvider: React.Provider<AuthContextType> = AuthContext.Provider

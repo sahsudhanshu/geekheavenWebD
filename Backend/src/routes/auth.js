@@ -1,11 +1,14 @@
 import { Router } from "express";
 import { User } from "../models/index.js";
+import generateToken from './../utils/tokenGenerator.js'
 
 const registerUser = Router()
 registerUser.post('/', async (req, res) => {
     const { name, email, password } = req.body;
+    console.log(req.body)
     try {
         const userCheck = await User.findOne({ email: email })
+
         if (userCheck) {
             return res.status(400).json({ message: "User Already Exists!" })
         }
@@ -13,7 +16,7 @@ registerUser.post('/', async (req, res) => {
         const user = await User.create({ name, email, password });
 
         if (user) {
-            return req.status(201).json({
+            return res.status(201).json({
                 _id: user._id,
                 name: user.name,
                 email: user.email,
@@ -30,7 +33,7 @@ registerUser.post('/', async (req, res) => {
 const loginUser = Router()
 loginUser.post('/', async (req, res) => {
     const { email, password } = req.body
-
+    console.log(req.body)
     try {
         const user = await User.findOne({ email })
         if (user && (await user.matchPassword(password))) {
