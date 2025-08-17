@@ -12,6 +12,7 @@ const Navbar: React.FC<NavbarProps> = ({ navigate }) => {
 
     const handleLogout = () => {
         logout();
+        setIsMenuOpen(false);
         navigate('home');
     }
 
@@ -30,6 +31,9 @@ const Navbar: React.FC<NavbarProps> = ({ navigate }) => {
                         {userInfo ? (
                             <>
                                 <span className="text-gray-700">Welcome, {userInfo.name}</span>
+                                <button onClick={() => navigate('dashboard')} className="text-gray-600 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium">
+                                    Dashboard
+                                </button>
                                 <button onClick={handleLogout} className="text-gray-600 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium">
                                     Logout
                                 </button>
@@ -67,6 +71,9 @@ const Navbar: React.FC<NavbarProps> = ({ navigate }) => {
                         {
                             (userInfo) ? (<>
                                 <span className="text-gray-700">Welcome, {userInfo.name}</span>
+                                <button onClick={() => navigate('dashboard')} className="text-gray-600 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium">
+                                    Dashboard
+                                </button>
                                 <button onClick={() => { handleLogout(); setIsMenuOpen(false); }} className="text-white bg-indigo-600 hover:bg-indigo-700 block w-full text-left px-3 py-2 rounded-md text-base font-medium">
                                     Logout
                                 </button></>
@@ -79,8 +86,6 @@ const Navbar: React.FC<NavbarProps> = ({ navigate }) => {
                                 </button>
                             </>)
                         }
-
-
                     </div>
                 </div>
             )}

@@ -4,7 +4,12 @@ import type { AuthContextType, UserInfo } from "../types";
 const AuthContext = createContext<AuthContextType>({
     userInfo: null,
     login: (userData: UserInfo) => { },
-    logout: () => { }
+    logout: () => { },
+    toggleBookmark: (questionId: string) => { },
+    toggleCompleted: (questionId: string) => { },
+    completedQues: [],
+    bookmarkedQues: [],
+    loading: false
 });
 
 export const useAuth = () => {

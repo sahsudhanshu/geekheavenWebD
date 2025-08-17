@@ -1,4 +1,4 @@
-export type Page = 'home' | 'login' | 'register';
+export type Page = 'home' | 'login' | 'register' | 'dashboard';
 export type NavigateFunction = (page: Page) => void;
 
 export interface UserInfo {
@@ -12,9 +12,12 @@ export interface AuthContextType {
     userInfo: UserInfo | null;
     login: (userData: UserInfo) => void;
     logout: () => void;
+    toggleCompleted: (questionId: string) => void;
+    toggleBookmark: (questionId: string, question: Question) => void;
+    completedQues: string[];
+    bookmarkedQues: Question[];
+    loading: boolean;
 }
-
-
 export interface Question {
     _id: string;
     title: string;

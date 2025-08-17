@@ -12,7 +12,7 @@ user.post('/bookmark', async (req, res) => {
 
         const { questionId } = req.body
         const user = await User.findById(req.user._id)
-        const itemIdx = user[bookmarkedQues].indexOf(questionId)
+        const itemIdx = user.bookmarkedQues.includes(questionId)
 
         if (itemIdx) {
             user.bookmarkedQues.pull(questionId);
@@ -32,15 +32,25 @@ user.post('/completed', async (req, res) => {
 
         const { questionId } = req.body
         const user = await User.findById(req.user._id)
-        const itemIdx = user[completedQues].indexOf(questionId)
-
+        const itemIdx = user.completedQues.includes(questionId)
         if (itemIdx) {
             user.completedQues.pull(questionId);
         } else {
-            user.completedQues.push(questionId);
+            user.completedQues.push(questionId)
         }
         await user.save();
         res.json({ completedQues: user.completedQues });
+    }
+    catch (e) {
+        console.log(e)
+        res.json({ message: 'Server Error' });
+    }
+})
+user.get('/data', async (req, res) => {
+    try {
+        const user = await User.findById(req.user._id).select('completedQues bookmarkedQues').populate('bookmarkedQues')
+
+        res.json(user);
     }
     catch (e) {
         console.log(e)
