@@ -1,0 +1,52 @@
+@import "tailwindcss";
+
+@keyframes move1 {
+  from {
+    transform: translate(0, 0) scale(1);
+  }
+  to {
+    transform: translate(30vw, 20vh) scale(1.5);
+  }
+}
+
+@keyframes move2 {
+  from {
+    transform: translate(0, 0) scale(1);
+  }
+  to {
+    transform: translate(-25vw, -15vh) scale(0.8);
+  }
+}
+
+@keyframes move3 {
+  from {
+    transform: translate(0, 0) scale(1);
+  }
+  to {
+    transform: translate(20vw, -25vh) scale(1.2);
+  }
+}
+
+@keyframes move4 {
+  from {
+    transform: translate(0, 0) scale(1);
+  }
+  to {
+    transform: translate(-20vw, 15vh) scale(1.1);
+  }
+}
+
+@layer utilities {
+  .animate-move1 {
+    animation: move1 15s infinite alternate;
+  }
+  .animate-move2 {
+    animation: move2 18s infinite alternate;
+  }
+  .animate-move3 {
+    animation: move3 12s infinite alternate;
+  }
+  .animate-move4 {
+    animation: move4 20s infinite alternate;
+  }
+}
