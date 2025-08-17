@@ -7,7 +7,7 @@ import Accordion from '../components/Category';
 const HomePage: React.FC = () => {
     const [questions, setQuestions] = useState<Question[]>([]);
     const [categories, setCategories] = useState<Category[]>([]);
-    const [loading, setLoading] = useState<boolean>(true);
+    const { setLoadingFunc } = useAuth();
     const [error, setError] = useState<string | null>(null);
 
     const { userInfo } = useAuth()
@@ -15,8 +15,8 @@ const HomePage: React.FC = () => {
     useEffect(() => {
         const loadData = async () => {
             try {
-                setLoading(true);
-                const [ quesRes, categoryRes ] = await Promise.all([fetchQues(),fetchCategories()]);
+                setLoadingFunc(true);
+                const [quesRes, categoryRes] = await Promise.all([fetchQues(), fetchCategories()]);
                 setQuestions(quesRes.data.questions);
                 setCategories(categoryRes.data.categories)
                 setError(null);
@@ -24,13 +24,12 @@ const HomePage: React.FC = () => {
                 setError('Failed to fetch data. Is the backend server running?');
                 console.error(err);
             } finally {
-                setLoading(false);
+                setLoadingFunc(false);
             }
         };
         loadData();
     }, []);
 
-    if (loading) return <div className="text-center p-8">Loading...</div>;
     if (error) return <div className="text-center p-8 text-red-500">{error}</div>;
 
     return (

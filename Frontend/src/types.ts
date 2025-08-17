@@ -16,6 +16,7 @@ export interface AuthContextType {
     toggleBookmark: (questionId: string, question: Question) => void;
     completedQues: string[];
     bookmarkedQues: Question[];
+    setLoadingFunc: (loading: boolean) => void;
     loading: boolean;
 }
 export interface Question {

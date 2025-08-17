@@ -9,7 +9,8 @@ const AuthContext = createContext<AuthContextType>({
     toggleCompleted: (questionId: string) => { },
     completedQues: [],
     bookmarkedQues: [],
-    loading: false
+    loading: false,
+    setLoadingFunc: (set: boolean) => { }
 });
 
 export const useAuth = () => {

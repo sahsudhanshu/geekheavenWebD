@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from 'react';
 import Navbar from './components/Navbar';
 import HomePage from './pages/HomePage';
@@ -9,6 +10,7 @@ import { AuthContextProvider } from './context/AuthContext.tsx'
 import { getUserData, toggleBookmarkedApi, toggleCompletedApi } from './api/index.ts';
 import DashboardPage from './pages/DashboardPage.tsx';
 import AnimatedBlobBackground from './components/BgDesign.tsx'
+import Loader from './components/Loader.tsx';
 
 function App() {
   const [currentPage, setCurrentPage] = useState<Page>('home');
@@ -20,6 +22,9 @@ function App() {
   const navigate = (page: Page) => {
     setCurrentPage(page);
   };
+  const setLoadingFunc = (value: boolean) => {
+    setLoading(value)
+  }
 
   const fetchUserData = async () => {
     try {
@@ -30,15 +35,6 @@ function App() {
       console.error("Failed to fetch user data on login", error);
     }
   };
-
-  useEffect(() => {
-    const storedUser = localStorage.getItem('userInfo');
-    if (storedUser) {
-      setUserInfo(JSON.parse(storedUser));
-      fetchUserData();
-    }
-    setLoading(false)
-  }, []);
 
   const login = async (userData: UserInfo) => {
     setUserInfo(userData)
@@ -78,6 +74,18 @@ function App() {
       fetchUserData();
     }
   }
+  useEffect(() => {
+    const init = async () => {
+      setLoadingFunc(true)
+      const storedUser = localStorage.getItem('userInfo');
+      if (storedUser) {
+        setUserInfo(JSON.parse(storedUser));
+        await fetchUserData();
+      }
+      setLoadingFunc(false)
+    }
+    init()
+  }, []);
 
   const renderPage = () => {
     switch (currentPage) {
@@ -92,21 +100,18 @@ function App() {
         return <HomePage />;
     }
   };
-  if (loading) {
-    return <div className="min-h-screen flex items-center justify-center">Loading Application...</div>
-  }
-
   return (
-    <AuthContextProvider value={{ userInfo, login, logout, toggleCompleted, toggleBookmark, completedQues, bookmarkedQues, loading }}>
+    <AuthContextProvider value={{ userInfo, login, logout, toggleCompleted, toggleBookmark, completedQues, bookmarkedQues, setLoadingFunc, loading }}>
       <div className="min-h-screen">
         <Navbar navigate={navigate} />
         <AnimatedBlobBackground />
+        {loading && <Loader />}
         <main>
           {renderPage()}
         </main>
       </div>
     </AuthContextProvider>
-  );
-}
+  )
 
+}
 export default App;

@@ -10,23 +10,25 @@ type LoginPageProps = {
 const LoginPage: React.FC<LoginPageProps> = ({ navigate }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
-    const { userInfo, login } = useAuth()
+    const { userInfo, login, setLoadingFunc } = useAuth()
 
     useEffect(() => {
         if (userInfo) {
             navigate('home')
         }
-    }, [navigate,userInfo])
+    }, [navigate, userInfo])
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
+            setLoadingFunc(true)
             const { data } = await loginUser(email, password);
             login(data);
             navigate('home');
+                setLoadingFunc(false)
         } catch (error) {
             console.error('Failed to login', error);
+            setLoadingFunc(false)
         }
     };
 
