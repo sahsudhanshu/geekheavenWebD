@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import type { Category, Question } from '../types';
 import QuestionBox from './QuestionBox';
-
-type AccordionProps = {
+type CategoriesProps = {
     categories: Category[];
     questions: Question[];
 };
 
-const Accordion: React.FC<AccordionProps> = ({ categories, questions }) => {
+const Categories: React.FC<CategoriesProps> = ({ categories, questions }) => {
     const [openCategoryId, setOpenCategoryId] = useState<string | null>(categories[0]?._id || null);
     const [categoryPage, setCategoryPage] = useState<number>(1);
     const [limitCategory, setLimitCategory] = useState<number>(5);
@@ -15,11 +14,9 @@ const Accordion: React.FC<AccordionProps> = ({ categories, questions }) => {
     const categoryStartIndex = (categoryPage - 1) * limitCategory;
     const totalPages = Math.ceil(categories.length / limitCategory);
     const currentPageCategories = categories.slice(categoryStartIndex, categoryStartIndex + limitCategory)
-
     const toggleCategory = (categoryId: string) => {
         setOpenCategoryId(prevId => (prevId === categoryId ? null : categoryId));
     };
-
     return (
         <div className="w-full max-w-4xl mx-auto border border-gray-200 rounded-lg bg-white shadow-sm" >
             {currentPageCategories.map((category) => {
@@ -85,15 +82,16 @@ const Accordion: React.FC<AccordionProps> = ({ categories, questions }) => {
                     </div>
                 </div>
             )}
-        </div>)
+        </div>
+    )
 };
 
-export default Accordion;
+export default Categories;
 // import React, { useState } from 'react';
 // import type { Category, Question } from '../types';
 // import QuestionItem from './QuestionItem';
 
-// type AccordionProps = {
+// type CategoriesProps = {
 //   categories: Category[];
 //   questions: Question[];
 // };
@@ -101,7 +99,7 @@ export default Accordion;
 // const CATEGORIES_PER_PAGE = 3; // Number of categories per page
 // const QUESTIONS_PER_PAGE = 5;  // Number of questions per category
 
-// const Accordion: React.FC<AccordionProps> = ({ categories, questions }) => {
+// const Categories: React.FC<CategoriesProps> = ({ categories, questions }) => {
 //   const [openCategoryId, setOpenCategoryId] = useState<string | null>(categories[0]?._id || null);
 //   const [categoryPage, setCategoryPage] = useState<number>(1);
 //   const [questionPageMap, setQuestionPageMap] = useState<{ [key: string]: number }>({});
@@ -215,4 +213,4 @@ export default Accordion;
 //   );
 // };
 
-// export default Accordion;
+// export default Categories;

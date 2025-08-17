@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { fetchCategories, fetchQues } from '../api';
 import type { Category, Question } from '../types';
 import { useAuth } from '../context/AuthContext';
-import Accordion from '../components/Category';
+import Categories from '../components/Category';
 
 const HomePage: React.FC = () => {
     const [questions, setQuestions] = useState<Question[]>([]);
@@ -28,6 +28,11 @@ const HomePage: React.FC = () => {
             }
         };
         loadData();
+        setLoadingFunc(true);
+        const timeout = setTimeout(() => {
+            setLoadingFunc(false);
+        }, 0);
+        return () => clearTimeout(timeout);
     }, []);
 
     if (error) return <div className="text-center p-8 text-red-500">{error}</div>;
@@ -42,7 +47,7 @@ const HomePage: React.FC = () => {
             </header>
 
             {/* This is the new list view */}
-            <Accordion categories={categories} questions={questions} />
+            <Categories categories={categories} questions={questions} />
 
         </div>
     );
