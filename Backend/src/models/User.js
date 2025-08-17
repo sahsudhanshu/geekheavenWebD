@@ -16,7 +16,15 @@ const userSchema = new Schema({
     password: {
         type: String,
         required: true
-    }
+    },
+    completedQues: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Question'
+    }],
+    bookmarkedQues: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Question'
+    }]
 }, { timestamps: true })
 
 userSchema.pre("save", async function (next) {

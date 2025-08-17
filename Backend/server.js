@@ -4,6 +4,7 @@ import connectDB from "./src/config/database.js";
 import questionsRoute from "./src/routes/questions.js";
 import cors from 'cors'
 import { loginUser, registerUser } from "./src/routes/auth.js";
+import user from "./src/routes/user.js";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -20,6 +21,7 @@ app.use(express.json());
 app.use('/api/v1/questions', questionsRoute)
 app.use('/api/v1/auth/register', registerUser)
 app.use('/api/v1/auth/login', loginUser)
+app.use('/api/v1/user',user)
 
 connectDB(MONGODB_CONNECTION_URI, DB_NAME).then(() => {
     app.listen(PORT, () => {
