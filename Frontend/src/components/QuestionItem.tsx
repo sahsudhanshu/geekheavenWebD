@@ -13,7 +13,7 @@ const QuestionItem: React.FC<QuestionItemProps> = ({ question }) => {
     const isBookmarked = bookmarkedQues.some(q => q._id === question._id)
 
     return (
-        <div className="flex items-center justify-between p-3 hover:bg-gray-50 rounded-lg transition-colors group">
+        <div className={`flex items-center justify-between p-3  rounded-lg transition-colors group ${isCompleted ? 'bg-[#7ce07c] hover:bg-[#81c481]' : ''}`}>
             <div className="flex items-center space-x-3">
                 {userInfo && (
                     <input
@@ -27,7 +27,7 @@ const QuestionItem: React.FC<QuestionItemProps> = ({ question }) => {
                     href={question.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`group-hover:text-black text-gray-700 ${isCompleted ? 'line-through text-gray-400' : ''}`}
+                    className={`group-hover:text-black text-gray-700 `}
                 >
                     {question.title}
                 </a>

@@ -10,7 +10,7 @@ const QuestionBox: React.FC<{ quesList: Question[] }> = ({ quesList }) => {
     const totalPages = Math.ceil(quesList.length / limitQues);
     const currentPageQues = quesList.slice(categoryStartIndex, categoryStartIndex + limitQues)
     return (
-        <div className="p-2">
+        <div className="p-2 space-y-1">
             {currentPageQues.length > 0 ? (
                 currentPageQues.map(q => <QuestionItem key={q._id} question={q} />)
             ) : (
@@ -33,7 +33,7 @@ const QuestionBox: React.FC<{ quesList: Question[] }> = ({ quesList }) => {
                     </div>
 
                     <div className="flex items-center gap-2">
-                        <label htmlFor="categoriesPerPage" className="text-gray-700 font-medium">Categories per page:</label>
+                        <label htmlFor="categoriesPerPage" className="text-gray-700 font-medium">Questions per page:</label>
                         <input
                             id="categoriesPerPage"
                             type="number"

@@ -1,16 +1,13 @@
-
 import { useEffect, useState } from 'react';
 import Navbar from './components/Navbar';
-import HomePage from './pages/HomePage';
-import LoginPage from './pages/LoginPage';
-import RegisterPage from './pages/RegisterPage';
+import { HomePage, DashboardPage, LoginPage, RegisterPage } from './pages/index.ts'
 import type { Page, Question } from './types';
 import type { UserInfo } from './types.ts';
 import { AuthContextProvider } from './context/AuthContext.tsx'
 import { getUserData, toggleBookmarkedApi, toggleCompletedApi } from './api/index.ts';
-import DashboardPage from './pages/DashboardPage.tsx';
 import AnimatedBlobBackground from './components/BgDesign.tsx'
-import Loader from './components/Loader.tsx';
+import Search from './components/Search.tsx';
+import SearchPage from './pages/SearchPage.tsx';
 
 function App() {
   const [currentPage, setCurrentPage] = useState<Page>('home');
@@ -95,6 +92,8 @@ function App() {
         return <RegisterPage navigate={navigate} />;
       case 'dashboard':
         return <DashboardPage />;
+      case 'search':
+        return <SearchPage/>
       case 'home':
       default:
         return <HomePage />;
@@ -105,7 +104,6 @@ function App() {
       <div className="min-h-screen">
         <Navbar navigate={navigate} />
         <AnimatedBlobBackground />
-        {loading && <Loader />}
         <main>
           {renderPage()}
         </main>

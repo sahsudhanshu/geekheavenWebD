@@ -7,10 +7,8 @@ import Categories from '../components/Category';
 const HomePage: React.FC = () => {
     const [questions, setQuestions] = useState<Question[]>([]);
     const [categories, setCategories] = useState<Category[]>([]);
-    const { setLoadingFunc } = useAuth();
     const [error, setError] = useState<string | null>(null);
-
-    const { userInfo } = useAuth()
+    const { setLoadingFunc, loading, userInfo } = useAuth();
 
     useEffect(() => {
         const loadData = async () => {
@@ -18,37 +16,41 @@ const HomePage: React.FC = () => {
                 setLoadingFunc(true);
                 const [quesRes, categoryRes] = await Promise.all([fetchQues(), fetchCategories()]);
                 setQuestions(quesRes.data.questions);
-                setCategories(categoryRes.data.categories)
+                setCategories(categoryRes.data.categories);
                 setError(null);
             } catch (err) {
-                setError('Failed to fetch data. Is the backend server running?');
+                setError('Failed to fetch data. Server Error!');
                 console.error(err);
             } finally {
                 setLoadingFunc(false);
             }
         };
         loadData();
-        setLoadingFunc(true);
-        const timeout = setTimeout(() => {
-            setLoadingFunc(false);
-        }, 0);
-        return () => clearTimeout(timeout);
     }, []);
 
-    if (error) return <div className="text-center p-8 text-red-500">{error}</div>;
+    if (error) {
+        return <div className="text-center p-8 text-red-500">{error}</div>;
+    }
 
     return (
         <div className="container mx-auto p-4 md:p-8">
             <header className="text-center mb-8">
-                <h1 className="text-3xl md:text-5xl font-bold text-gray-800">GeekHeaven Problem Set</h1>
+                <h1 className="text-3xl md:text-5xl font-bold text-gray-800">
+                    GeekHeaven Problem Set
+                </h1>
                 <p className="text-gray-500 mt-2">
                     {userInfo ? `Welcome back, ${userInfo.name}! Let's get started.` : 'Your comprehensive guide to mastering DSA'}
                 </p>
             </header>
 
-            {/* This is the new list view */}
-            <Categories categories={categories} questions={questions} />
-
+            {loading ? (
+                <div className="flex justify-center items-center min-h-[100px]">
+                    <span className="loader"></span>
+                </div>
+            ) : (
+                <Categories categories={categories} questions={questions} />
+            )}
+            
         </div>
     );
 };

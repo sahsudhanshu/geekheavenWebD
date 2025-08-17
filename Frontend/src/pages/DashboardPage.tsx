@@ -1,15 +1,27 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import ProgressBar from '../components/Progressbar';
 import QuestionItem from '../components/QuestionItem';
 import type { Question } from '../types';
+import { fetchQues } from '../api';
 
 const DashboardPage: React.FC = () => {
-    const { completedQues, bookmarkedQues } = useAuth();
-    
-    // We need the total number of questions for the progress bar.
-    // This is a placeholder; a better approach would be to fetch this from an API endpoint.
-    const TOTAL_QUESTIONS = 250; // A reasonable estimate for now
+    const { completedQues, setLoadingFunc, bookmarkedQues } = useAuth();
+    const [totalQues, setTotalQues] = useState<number>(0)
+    useEffect(() => {
+        const loadData = async () => {
+            try {
+                setLoadingFunc(true);
+                const [res] = await Promise.all([fetchQues()]);
+                setTotalQues(res.data.questions.length)
+            } catch (err) {
+                console.error(err);
+            } finally {
+                setLoadingFunc(false);
+            }
+        };
+        loadData();
+    }, []);
 
     return (
         <div className="container mx-auto p-4 md:p-8">
@@ -19,14 +31,14 @@ const DashboardPage: React.FC = () => {
             </header>
 
             <div className="mb-12">
-                <ProgressBar value={completedQues.length} max={TOTAL_QUESTIONS} />
+                <ProgressBar value={completedQues.length} max={totalQues} />
             </div>
 
             <div>
                 <h2 className="text-2xl font-bold text-gray-800 mb-4">Bookmarked Questions</h2>
                 <div className="w-full bg-white border border-gray-200 rounded-lg shadow-sm">
                     {bookmarkedQues.length > 0 ? (
-                        <div className="p-2">
+                        <div className="p-2 space-y-1">
                             {bookmarkedQues.map((question: Question) => (
                                 <QuestionItem key={question._id} question={question} />
                             ))}

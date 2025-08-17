@@ -1,4 +1,4 @@
-export type Page = 'home' | 'login' | 'register' | 'dashboard';
+export type Page = 'home' | 'login' | 'register' | 'dashboard' | 'search';
 export type NavigateFunction = (page: Page) => void;
 
 export interface UserInfo {
