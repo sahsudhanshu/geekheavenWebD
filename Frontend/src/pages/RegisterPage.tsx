@@ -11,30 +11,40 @@ const RegisterPage: React.FC<RegisterPageProps> = ({ navigate }) => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
-    const { userInfo, login } = useAuth()
+    const { userInfo, login, showToast } = useAuth()
+    const [errors, setErrors] = useState<{ name?: string; email?: string; password?: string }>({})
 
     useEffect(() => {
         if (userInfo) {
             navigate('home')
         }
     }, [navigate, userInfo])
+
+    const validate = () => {
+        const newErrors: { name?: string; email?: string; password?: string } = {}
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+        if (!name.trim()) newErrors.name = "Name is required"
+        if (!emailRegex.test(email)) newErrors.email = "Enter a valid email address"
+        if (password.length < 6) newErrors.password = "Password must be at least 6 characters"
+
+        setErrors(newErrors)
+        return Object.keys(newErrors).length === 0
+    }
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log('Registering with:', { name, email, password });
 
-        if (password.length < 6) {
-            alert('Password must be at least 6 characters');
-            return;
-        }
+        if (!validate()) return;
 
         try {
-            const { data } = await registerUser(name, email, password)
+            const data = await registerUser(name, email, password)
             login(data)
             navigate('home')
-            return;
+            showToast('success', 'Registration Successful!')
         } catch (e) {
             console.log(e)
+            showToast('error', 'Registration failed. Try again later!')
         }
     };
 
@@ -53,19 +63,54 @@ const RegisterPage: React.FC<RegisterPageProps> = ({ navigate }) => {
                     </p>
                 </div>
                 <form className="mt-8 space-y-6 bg-white p-8 shadow-lg rounded-lg" onSubmit={handleSubmit}>
-                    <div className="rounded-md shadow-sm -space-y-px">
+                    <div className="rounded-md shadow-sm space-y-0.5">
+                        {/* Name */}
                         <div>
-                            <input id="name" name="name" type="text" required className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
+                            <input
+                                id="name"
+                                name="name"
+                                type="text"
+                                className={`relative block w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm ${errors.name ? 'border-red-500' : ''}`}
+                                placeholder="Name"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                            />
+                            {errors.name && <span className="text-red-500 text-sm ml-1 block">{errors.name}</span>}
                         </div>
+
+                        {/* Email */}
                         <div>
-                            <input id="email-address" name="email" type="email" required className="relative block w-full appearance-none rounded-none border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" placeholder="Email address" value={email} onChange={(e) => setEmail(e.target.value)} />
+                            <input
+                                id="email-address"
+                                name="email"
+                                type="email"
+                                className={`relative block w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm ${errors.email ? 'border-red-500' : ''}`}
+                                placeholder="Email address"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
+                            {errors.email && <span className="text-red-500 text-sm ml-1 block">{errors.email}</span>}
                         </div>
+
+                        {/* Password */}
                         <div>
-                            <input id="password" name="password" type="password" required className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                            <input
+                                id="password"
+                                name="password"
+                                type="password"
+                                className={`relative block w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm ${errors.password ? 'border-red-500' : ''}`}
+                                placeholder="Password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
+                            {errors.password && <span className="text-red-500 text-sm ml-1 block">{errors.password}</span>}
                         </div>
                     </div>
+
                     <div>
-                        <button type="submit" className="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                        <button
+                            type="submit"
+                            className="group relative flex w-full justify-center rounded-md bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                             Create Account
                         </button>
                     </div>

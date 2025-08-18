@@ -18,6 +18,7 @@ export interface AuthContextType {
     bookmarkedQues: Question[];
     setLoadingFunc: (loading: boolean) => void;
     loading: boolean;
+    showToast: (type: "success" | "error" | "info", msg: string) => void;
 }
 export interface Question {
     _id: string;

@@ -6,8 +6,8 @@ import type { UserInfo } from './types.ts';
 import { AuthContextProvider } from './context/AuthContext.tsx'
 import { getUserData, toggleBookmarkedApi, toggleCompletedApi } from './api/index.ts';
 import AnimatedBlobBackground from './components/BgDesign.tsx'
-import Search from './components/Search.tsx';
 import SearchPage from './pages/SearchPage.tsx';
+import Toast from './components/Toast.tsx';
 
 function App() {
   const [currentPage, setCurrentPage] = useState<Page>('home');
@@ -25,7 +25,7 @@ function App() {
 
   const fetchUserData = async () => {
     try {
-      const { data } = await getUserData();
+      const data = await getUserData();
       setCompletedQues(data.completedQues || []);
       setBookmarkedQues(data.bookmarkedQues || []);
     } catch (error) {
@@ -93,17 +93,30 @@ function App() {
       case 'dashboard':
         return <DashboardPage />;
       case 'search':
-        return <SearchPage/>
+        return <SearchPage />
       case 'home':
       default:
         return <HomePage />;
     }
   };
+
+  const [toast, setToast] = useState<{ message: string; type: "success" | "error" | "info" } | null>(null);
+
+  const showToast = (type: "success" | "error" | "info", msg: string) => {
+    setToast({ message: msg, type });
+  };
   return (
-    <AuthContextProvider value={{ userInfo, login, logout, toggleCompleted, toggleBookmark, completedQues, bookmarkedQues, setLoadingFunc, loading }}>
+    <AuthContextProvider value={{ userInfo, login, logout, toggleCompleted, toggleBookmark, completedQues, bookmarkedQues, setLoadingFunc, loading, showToast }}>
       <div className="min-h-screen">
         <Navbar navigate={navigate} />
         <AnimatedBlobBackground />
+        {toast && (
+          <Toast
+            message={toast.message}
+            type={toast.type}
+            onClose={() => setToast(null)}
+          />
+        )}
         <main>
           {renderPage()}
         </main>

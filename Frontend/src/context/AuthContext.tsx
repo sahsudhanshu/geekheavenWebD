@@ -10,7 +10,8 @@ const AuthContext = createContext<AuthContextType>({
     completedQues: [],
     bookmarkedQues: [],
     loading: false,
-    setLoadingFunc: (set: boolean) => { }
+    setLoadingFunc: (set: boolean) => { },
+    showToast: (type: "success" | "error" | "info", msg: string) => { }
 });
 
 export const useAuth = () => {

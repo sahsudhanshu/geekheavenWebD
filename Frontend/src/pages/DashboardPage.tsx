@@ -13,7 +13,7 @@ const DashboardPage: React.FC = () => {
             try {
                 setLoadingFunc(true);
                 const [res] = await Promise.all([fetchQues()]);
-                setTotalQues(res.data.questions.length)
+                setTotalQues(res.questions.length)
             } catch (err) {
                 console.error(err);
             } finally {

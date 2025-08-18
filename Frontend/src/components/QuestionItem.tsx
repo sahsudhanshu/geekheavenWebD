@@ -13,7 +13,7 @@ const QuestionItem: React.FC<QuestionItemProps> = ({ question }) => {
     const isBookmarked = bookmarkedQues.some(q => q._id === question._id)
 
     return (
-        <div className={`flex items-center justify-between p-3  rounded-lg transition-colors group ${isCompleted ? 'bg-[#7ce07c] hover:bg-[#81c481]' : ''}`}>
+        <div className={`flex items-center justify-between p-3  rounded-lg transition-colors group ${isCompleted ? 'bg-[#90f68e] hover:bg-[#81c481]' : ''}`}>
             <div className="flex items-center space-x-3">
                 {userInfo && (
                     <input

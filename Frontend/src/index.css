@@ -69,13 +69,35 @@
   animation: rotation 1s linear infinite;
 }
 
-@keyframes rotation {
-  0% {
-    transform: rotate(0deg);
+/* Toast slide from top */
+@keyframes slideInLeft {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
   }
-
-  100% {
-    transform: rotate(360deg);
+  to {
+    transform: translateX(0);
+    opacity: 1;
   }
 }
 
+@keyframes draw {
+  from {
+    stroke-dasharray: 100;
+    stroke-dashoffset: 100;
+  }
+  to {
+    stroke-dasharray: 100;
+    stroke-dashoffset: 0;
+  }
+}
+
+.animate-slideInLeft {
+  animation: slideInLeft 0.25s ease-out forwards;
+}
+
+.animate-draw {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  animation: draw 2.5s ease forwards;
+}

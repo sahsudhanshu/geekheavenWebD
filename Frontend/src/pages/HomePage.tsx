@@ -15,8 +15,8 @@ const HomePage: React.FC = () => {
             try {
                 setLoadingFunc(true);
                 const [quesRes, categoryRes] = await Promise.all([fetchQues(), fetchCategories()]);
-                setQuestions(quesRes.data.questions);
-                setCategories(categoryRes.data.categories);
+                setQuestions(quesRes.questions);
+                setCategories(categoryRes.categories);
                 setError(null);
             } catch (err) {
                 setError('Failed to fetch data. Server Error!');
