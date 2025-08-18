@@ -1,16 +1,16 @@
 import React from 'react';
+import { useSpeech } from '../context/speechContext';
 
-type VoiceControlButtonProps = {
-    isListening: boolean;
-    startListening: () => void;
-};
 
-const VoiceControlButton: React.FC<VoiceControlButtonProps> = ({ isListening, startListening }) => {
+
+const VoiceControlButton: React.FC = () => {
+    const { isListening, stopListening, startListening } = useSpeech()
+
     return (
         <button
-            onClick={startListening}
-            className={`p-2 rounded-full transition-colors ${isListening ? 'bg-red-500 text-white animate-pulse' : 'text-gray-600 hover:bg-gray-100'}`}
-            title="Use Voice Commands"
+            onClick={isListening ? stopListening : startListening}
+            className={`p-2 rounded-full transition ${isListening ? 'bg-red-500 text-white' : 'text-gray-100 hover:bg-gray-100 hover:text-gray-800'}`}
+            
         >
             {/* Microphone Icon */}
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

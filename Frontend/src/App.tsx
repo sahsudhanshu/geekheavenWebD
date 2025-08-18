@@ -4,10 +4,12 @@ import { HomePage, DashboardPage, LoginPage, RegisterPage } from './pages/index.
 import type { Page, Question } from './types';
 import type { UserInfo } from './types.ts';
 import { AuthContextProvider } from './context/AuthContext.tsx'
+import { SpeechContextProvider } from './context/speechContext.tsx'
 import { getUserData, toggleBookmarkedApi, toggleCompletedApi } from './api/index.ts';
 import Background from './components/Background.tsx'
 import SearchPage from './pages/SearchPage.tsx';
 import Toast from './components/Toast.tsx';
+import { useSpeechRecognition } from './hooks/useSpeechReco.tsx';
 
 function App() {
   const [currentPage, setCurrentPage] = useState<Page>('home');
@@ -106,21 +108,23 @@ function App() {
     setToast({ message: msg, type });
   };
   return (
-    <AuthContextProvider value={{ userInfo, login, logout, toggleCompleted, toggleBookmark, completedQues, bookmarkedQues, setLoadingFunc, loading, showToast }}>
-      <div className="min-h-screen">
-        <Navbar navigate={navigate} />
-        <Background />
-        {toast && (
-          <Toast
-            message={toast.message}
-            type={toast.type}
-            onClose={() => setToast(null)}
-          />
-        )}
-        <main>
-          {renderPage()}
-        </main>
-      </div>
+    <AuthContextProvider value={{ userInfo, login, logout, toggleCompleted, toggleBookmark, completedQues, bookmarkedQues, setLoadingFunc, loading, showToast }} >
+      <SpeechContextProvider value={useSpeechRecognition()}>
+        <div className="min-h-screen">
+          <Navbar navigate={navigate} />
+          <Background />
+          {toast && (
+            <Toast
+              message={toast.message}
+              type={toast.type}
+              onClose={() => setToast(null)}
+            />
+          )}
+          <main>
+            {renderPage()}
+          </main>
+        </div>
+      </SpeechContextProvider>
     </AuthContextProvider>
   )
 

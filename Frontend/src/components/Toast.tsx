@@ -34,9 +34,9 @@ export default function Toast({ type, message, onClose }: ToastProps) {
     };
 
     const bgColors: Record<string, string> = {
-        success: "bg-green-600",
-        error: "bg-red-600",
-        info: "bg-blue-600",
+        success: "bg-green-600 dark:bg-green-900",
+        error: "bg-red-600 dark:bg-red-800",
+        // info: "bg-blue-600 dark:border-red-800",
     };
 
     return (

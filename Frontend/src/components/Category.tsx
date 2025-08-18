@@ -9,7 +9,7 @@ type CategoriesProps = {
 const Categories: React.FC<CategoriesProps> = ({ categories, questions }) => {
     const [openCategoryId, setOpenCategoryId] = useState<string | null>(categories[0]?._id || null);
     const [categoryPage, setCategoryPage] = useState<number>(1);
-    const [limitCategory, setLimitCategory] = useState<number>(5);
+    const [limitCategory, setLimitCategory] = useState<number>(7);
 
     const categoryStartIndex = (categoryPage - 1) * limitCategory;
     const totalPages = Math.ceil(categories.length / limitCategory);
@@ -18,7 +18,7 @@ const Categories: React.FC<CategoriesProps> = ({ categories, questions }) => {
         setOpenCategoryId(prevId => (prevId === categoryId ? null : categoryId));
     };
     return (
-        <div className="w-full max-w-4xl mx-auto border border-gray-200 rounded-lg bg-white shadow-sm dark:border-gray-800 dark:bg-[#16161e]" >
+        <div className="w-full max-w-4xl mx-auto border border-gray-200 rounded-lg bg-white shadow-sm dark:border-gray-950 dark:bg-gray-950" >
             {currentPageCategories.map((category) => {
                 const isOpen = openCategoryId === category._id;
                 const quesList = questions.filter(q => category.questions.includes(q._id));
@@ -29,7 +29,7 @@ const Categories: React.FC<CategoriesProps> = ({ categories, questions }) => {
                             onClick={() => toggleCategory(category._id)}
                             className="w-full flex justify-between items-center p-4 text-left font-semibold text-gray-800 hover:bg-gray-50 focus:outline-none dark:hover:bg-gray-900"
                         >
-                            <span>{category.title} ({quesList.length})</span>
+                            <span className='dark:text-gray-100'>{category.title} ({quesList.length})</span>
                             <svg
                                 className={`w-5 h-5 transform transition-transform duration-300 ${isOpen ? 'rotate-180' : ''} dark:text-gray-50`}
                                 fill="none"
@@ -49,23 +49,23 @@ const Categories: React.FC<CategoriesProps> = ({ categories, questions }) => {
                 );
             })}
             {totalPages >= 1 && (
-                <div className="flex flex-col md:flex-row justify-between items-center gap-2 mt-4 p-2 border-t border-gray-200">
+                <div className="flex flex-col md:flex-row justify-between items-center gap-2 mt-4 p-2 border-t border-gray-200 dark:border-gray-800">
                     <div className="flex gap-2">
                         <button
                             onClick={() => setCategoryPage(prev => Math.max(prev - 1, 1))}
                             disabled={categoryPage === 1}
-                            className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50 hover:bg-gray-300 transition dark:bg-gray-800"
+                            className="px-3 py-1 bg-gray-200 rounded-md disabled:opacity-50 hover:bg-gray-300 transition border-3 border-[#236af2] dark:text-gray-50 dark:bg-gray-950 dark:hover:bg-gray-800"
                         >Prev</button>
-                        <span className="px-2 py-1 font-medium">{categoryPage} / {totalPages}</span>
+                        <span className="px-2 py-1 font-medium dark:text-gray-50">{categoryPage} / {totalPages}</span>
                         <button
                             onClick={() => setCategoryPage(prev => Math.min(prev + 1, totalPages))}
                             disabled={categoryPage === totalPages}
-                            className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50 hover:bg-gray-300 transition"
+                            className="px-3 py-1 bg-gray-200 rounded-md disabled:opacity-50 hover:bg-gray-300 transition border-3 border-[#236af2] dark:text-gray-50 dark:bg-gray-950 dark:hover:bg-gray-800"
                         >Next</button>
                     </div>
 
                     <div className="flex items-center gap-2">
-                        <label htmlFor="categoriesPerPage" className="text-gray-700 font-medium">Categories per page:</label>
+                        <label htmlFor="categoriesPerPage" className="text-gray-700 font-medium dark:text-gray-50">Categories per page:</label>
                         <input
                             id="categoriesPerPage"
                             type="number"
@@ -77,7 +77,7 @@ const Categories: React.FC<CategoriesProps> = ({ categories, questions }) => {
                                 setLimitCategory(value);
                                 setCategoryPage(1);
                             }}
-                            className="w-20 border border-gray-300 rounded px-3 py-1 bg-white focus:outline-none focus:ring-1 focus:ring-blue-400 transition"
+                            className="w-20 rounded-md px-3 py-1 bg-white focus:outline-none focus:ring-1 focus:ring-blue-400 transition dark:bg-gray-950 border-3 border-[#236af2] dark:text-gray-50"
                         />
                     </div>
                 </div>

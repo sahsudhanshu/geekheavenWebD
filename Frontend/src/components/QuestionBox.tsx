@@ -4,7 +4,7 @@ import type { Question } from './../types.ts'
 
 const QuestionBox: React.FC<{ quesList: Question[] }> = ({ quesList }) => {
     const [questionPage, setquestionPage] = useState<number>(1);
-    const [limitQues, setlimitQues] = useState<number>(5);
+    const [limitQues, setlimitQues] = useState<number>(8);
 
     const categoryStartIndex = (questionPage - 1) * limitQues;
     const totalPages = Math.ceil(quesList.length / limitQues);
@@ -22,18 +22,18 @@ const QuestionBox: React.FC<{ quesList: Question[] }> = ({ quesList }) => {
                         <button
                             onClick={() => setquestionPage(prev => Math.max(prev - 1, 1))}
                             disabled={questionPage === 1}
-                            className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50 hover:bg-gray-300 transition dark:bg-gray-800"
+                            className="px-3 py-1 bg-gray-200 rounded-md disabled:opacity-50 hover:bg-gray-300 transition border-3 border-[#236af2] dark:text-gray-50 dark:bg-gray-950 dark:hover:bg-gray-800"
                         >Prev</button>
-                        <span className="px-2 py-1 font-medium">{questionPage} / {totalPages}</span>
+                        <span className="px-2 py-1 font-medium dark:text-gray-50">{questionPage} / {totalPages}</span>
                         <button
                             onClick={() => setquestionPage(prev => Math.min(prev + 1, totalPages))}
                             disabled={questionPage === totalPages}
-                            className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50 hover:bg-gray-300 transition dark:bg-gray-800"
+                            className="px-3 py-1 bg-gray-200 rounded-md disabled:opacity-50 hover:bg-gray-300 transition border-3 border-[#236af2] dark:text-gray-50 dark:bg-gray-950 dark:hover:bg-gray-800"
                         >Next</button>
                     </div>
 
                     <div className="flex items-center gap-2">
-                        <label htmlFor="categoriesPerPage" className="text-gray-700 font-medium">Questions per page:</label>
+                        <label htmlFor="categoriesPerPage" className="text-gray-700 font-medium dark:text-gray-50">Questions per page:</label>
                         <input
                             id="categoriesPerPage"
                             type="number"
@@ -45,7 +45,7 @@ const QuestionBox: React.FC<{ quesList: Question[] }> = ({ quesList }) => {
                                 setlimitQues(value);
                                 setquestionPage(1);
                             }}
-                            className="w-20 border border-gray-300 rounded px-3 py-1 bg-white focus:outline-none focus:ring-1 focus:ring-blue-400 transition"
+                            className="w-20 rounded-md px-3 py-1 bg-white focus:outline-none focus:ring-1 focus:ring-blue-400 transition dark:bg-gray-950 border-3 border-[#236af2] dark:text-gray-50"
                         />
                     </div>
                 </div>

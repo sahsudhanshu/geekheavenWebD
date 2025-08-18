@@ -36,7 +36,7 @@ const HomePage: React.FC = () => {
         <div className="container mx-auto p-4 md:p-8">
             <header className="text-center mb-8">
                 <h1 className="text-3xl md:text-5xl font-bold text-gray-800 dark:text-gray-200">
-                    GeekHeaven Problem Set
+                    QuesHaven Problem Set
                 </h1>
                 <p className="text-gray-500 mt-2 dark:text-gray-300">
                     {userInfo ? `Welcome back, ${userInfo.name}! Let's get started.` : 'Your comprehensive guide to mastering DSA'}
@@ -45,7 +45,7 @@ const HomePage: React.FC = () => {
 
             {loading ? (
                 <div className="flex justify-center items-center min-h-[100px]">
-                    <span className="loader"></span>
+                    <span className="loader dark:border-white"></span>
                 </div>
             ) : (
                 <Categories categories={categories} questions={questions} />

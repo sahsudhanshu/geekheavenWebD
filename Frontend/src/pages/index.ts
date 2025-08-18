@@ -3,4 +3,4 @@ import LoginPage from './LoginPage.tsx';
 import RegisterPage from './RegisterPage.tsx';
 import DashboardPage from './DashboardPage.tsx';
 
-export { HomePage,LoginPage,RegisterPage,DashboardPage}
+export { HomePage, LoginPage, RegisterPage, DashboardPage }

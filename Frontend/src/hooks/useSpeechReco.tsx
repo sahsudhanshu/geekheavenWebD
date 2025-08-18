@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
-import { useFormState } from "react-dom";
 
 const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
 const recognition = SpeechRecognition ? new SpeechRecognition() : null;
@@ -32,12 +31,12 @@ export const useSpeechRecognition = () => {
     }
     useEffect(() => {
         if (!recognition) return
-        recognition.onresult = (event: SpeechRecognitionEvent) => {
+        recognition.onresult = (event: any) => {
             const currTranscript = event.results[0][0].transcript;
             setTranscript(currTranscript.toLowerCase())
             stopListening();
         }
-        recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
+        recognition.onerror = (event: any) => {
             setError(event.error);
             stopListening();
         };
@@ -60,6 +59,6 @@ export const useSpeechRecognition = () => {
         error,
         startListening,
         stopListening,
-        hasRecognitionSupport: !!recognition,
+        hasRecognitionSupport: recognition,
     };
 }
