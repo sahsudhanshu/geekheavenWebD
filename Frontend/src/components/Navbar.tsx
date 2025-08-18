@@ -18,18 +18,18 @@ const Navbar: React.FC<NavbarProps> = ({ navigate }) => {
     }
 
     return (
-        <nav className="bg-white shadow-md sticky top-0 z-50">
+        <nav className="bg-white shadow-md sticky top-0 z-50 dark:bg-gray-900">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-16">
                     <div className="flex-shrink-0">
-                        <button onClick={() => navigate('home')} className="transition-transform duration-500 ease-in-out transform hover:scale-125 text-2xl font-bold text-gray-800">
+                        <button onClick={() => navigate('home')} className="transition-transform duration-500 ease-in-out transform hover:scale-125 text-2xl font-bold text-gray-800 dark:text-gray-100">
                             GeekHeaven
                         </button>
                     </div>
                     <div className="hidden md:flex items-center space-x-4">
                         <button
                             onClick={() => navigate('search')}
-                            className="fixed bottom-8 right-8 bg-indigo-600 text-white p-4 rounded-full shadow-lg hover:bg-indigo-700 transition-transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                            className="fixed bottom-8 right-8 bg-indigo-600 text-white p-4 rounded-full shadow-lg hover:bg-indigo-700 transition-transform duration-500 ease-in-out transform hover:scale-125 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 "
                             title="Search Questions"
                         >
                             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
@@ -38,17 +38,17 @@ const Navbar: React.FC<NavbarProps> = ({ navigate }) => {
                             <>
                                 <span className="text-gray-700">Welcome, {userInfo.name}</span>
                                 <ThemeButton />
-                                <button onClick={() => navigate('dashboard')} className="text-gray-600 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium ">
+                                <button onClick={() => navigate('dashboard')} className="text-gray-800 hover:bg-gray-300 px-3 py-2 rounded-md text-sm font-medium ">
                                     Dashboard
                                 </button>
-                                <button onClick={handleLogout} className="text-gray-600 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium">
+                                <button onClick={handleLogout} className="text-gray-800 hover:bg-gray-300 px-3 py-2 rounded-md text-sm font-medium">
                                     Logout
                                 </button>
                             </>
                         ) : (
                             <>
                                 <ThemeButton />
-                                <button onClick={() => navigate('login')} className="text-gray-600 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium transition-transform duration-500 ease-in-out transform hover:scale-125">
+                                <button onClick={() => navigate('login')} className="text-gray-800 hover:bg-gray-200 px-3 py-2 rounded-md text-sm font-medium transition-transform duration-500 ease-in-out transform hover:scale-125 dark:text-gray-100 dark:bg-gray-800 dark:hover:text-gray-800">
                                     Login
                                 </button>
                                 <button onClick={() => navigate('register')} className="text-white bg-indigo-600 hover:bg-indigo-700 px-3 py-2 rounded-md text-sm font-medium transition-transform duration-500 ease-in-out transform hover:scale-125">
@@ -58,9 +58,10 @@ const Navbar: React.FC<NavbarProps> = ({ navigate }) => {
                         )}
                     </div>
                     <div className="md:hidden flex items-center">
+                        <ThemeButton />
                         <button
                             onClick={() => setIsMenuOpen(!isMenuOpen)}
-                            className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:bg-gray-100 focus:outline-none"
+                            className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:bg-gray-300 focus:outline-none dark:bg-gray-800 dark:text-gray-100 dark:hover:text-gray-800 transition-transform duration-500 ease-in-out transform hover:scale-110"
                         >
                             {isMenuOpen ? (<svg className="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>)
                                 : (<svg className="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>)}
@@ -76,14 +77,14 @@ const Navbar: React.FC<NavbarProps> = ({ navigate }) => {
                             (userInfo) ? (<>
                                 <span className="text-gray-700">Welcome, {userInfo.name}</span>
                                 <ThemeButton />
-                                <button onClick={() => navigate('dashboard')} className="text-gray-600 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium">
+                                <button onClick={() => navigate('dashboard')} className="text-gray-800 hover:bg-gray-300 px-3 py-2 rounded-md text-sm font-medium">
                                     Dashboard
                                 </button>
                                 <button onClick={() => { handleLogout(); setIsMenuOpen(false); }} className="text-white bg-indigo-600 hover:bg-indigo-700 block w-full text-left px-3 py-2 rounded-md text-base font-medium">
                                     Logout
                                 </button></>
                             ) : (<>
-                                <button onClick={() => { navigate('login'); setIsMenuOpen(false); }} className="text-gray-600 hover:bg-gray-100 block w-full text-left px-3 py-2 rounded-md text-base font-medium">
+                                <button onClick={() => { navigate('login'); setIsMenuOpen(false); }} className="text-gray-800 hover:bg-gray-300 block w-full text-left px-3 py-2 rounded-md text-base font-medium dark:text-gray-100 dark:bg-gray-800 dark:hover:text-gray-800">
                                     Login
                                 </button>
                                 <button onClick={() => { navigate('register'); setIsMenuOpen(false); }} className="text-white bg-indigo-600 hover:bg-indigo-700 block w-full text-left px-3 py-2 rounded-md text-base font-medium">

@@ -5,7 +5,7 @@ import type { Page, Question } from './types';
 import type { UserInfo } from './types.ts';
 import { AuthContextProvider } from './context/AuthContext.tsx'
 import { getUserData, toggleBookmarkedApi, toggleCompletedApi } from './api/index.ts';
-import AnimatedBlobBackground from './components/BgDesign.tsx'
+import Background from './components/Background.tsx'
 import SearchPage from './pages/SearchPage.tsx';
 import Toast from './components/Toast.tsx';
 
@@ -109,7 +109,7 @@ function App() {
     <AuthContextProvider value={{ userInfo, login, logout, toggleCompleted, toggleBookmark, completedQues, bookmarkedQues, setLoadingFunc, loading, showToast }}>
       <div className="min-h-screen">
         <Navbar navigate={navigate} />
-        <AnimatedBlobBackground />
+        <Background />
         {toast && (
           <Toast
             message={toast.message}

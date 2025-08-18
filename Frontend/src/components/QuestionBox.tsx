@@ -14,21 +14,21 @@ const QuestionBox: React.FC<{ quesList: Question[] }> = ({ quesList }) => {
             {currentPageQues.length > 0 ? (
                 currentPageQues.map(q => <QuestionItem key={q._id} question={q} />)
             ) : (
-                <p className="p-3 text-gray-500">No questions found for this category.</p>
+                <p className="p-3 text-gray-500 dark:text-gray-50">No questions found for this category.</p>
             )}
             {totalPages >= 1 && (
-                <div className="flex flex-col md:flex-row justify-between items-center gap-2 mt-4 p-2 border-t border-gray-200">
+                <div className="flex flex-col md:flex-row justify-between items-center gap-2 mt-4 p-2 border-t border-gray-200 dark:border-gray-800">
                     <div className="flex gap-2">
                         <button
                             onClick={() => setquestionPage(prev => Math.max(prev - 1, 1))}
                             disabled={questionPage === 1}
-                            className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50 hover:bg-gray-300 transition"
+                            className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50 hover:bg-gray-300 transition dark:bg-gray-800"
                         >Prev</button>
                         <span className="px-2 py-1 font-medium">{questionPage} / {totalPages}</span>
                         <button
                             onClick={() => setquestionPage(prev => Math.min(prev + 1, totalPages))}
                             disabled={questionPage === totalPages}
-                            className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50 hover:bg-gray-300 transition"
+                            className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50 hover:bg-gray-300 transition dark:bg-gray-800"
                         >Next</button>
                     </div>
 

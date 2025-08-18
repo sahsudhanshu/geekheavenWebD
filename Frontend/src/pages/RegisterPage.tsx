@@ -42,15 +42,17 @@ const RegisterPage: React.FC<RegisterPageProps> = ({ navigate }) => {
             login(data)
             navigate('home')
             showToast('success', 'Registration Successful!')
-        } catch (e) {
+        } catch (e: any) {
             console.log(e)
-            showToast('error', 'Registration failed. Try again later!')
+            navigate('login')
+            localStorage.setItem('email', email)
+            showToast('error', e.message)
         }
     };
 
     return (
-        <div className="flex items-center justify-center min-h-[calc(100vh-4rem)] bg-gray-50 px-4 sm:px-6 lg:px-8">
-            <div className="w-full max-w-md space-y-8">
+        <div className="flex items-center justify-center min-h-[calc(100vh-4rem)] px-4 sm:px-6 lg:px-8">
+            <div className="w-full max-w-md space-y-8 bg-gray-50 ">
                 <div>
                     <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
                         Create your account

@@ -5,7 +5,6 @@ import generateToken from './../utils/tokenGenerator.js'
 const registerUser = Router()
 registerUser.post('/', async (req, res) => {
     const { name, email, password } = req.body;
-    console.log(req.body)
     try {
         const userCheck = await User.findOne({ email: email })
 
@@ -33,7 +32,6 @@ registerUser.post('/', async (req, res) => {
 const loginUser = Router()
 loginUser.post('/', async (req, res) => {
     const { email, password } = req.body
-    console.log(req.body)
     try {
         const user = await User.findOne({ email })
         if (user && (await user.matchPassword(password))) {

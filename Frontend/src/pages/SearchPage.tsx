@@ -4,6 +4,7 @@ import { useDebounce } from '../hooks/useDebounce';
 import { searchQues } from '../api';
 import type { Question } from '../types';
 import QuestionItem from '../components/QuestionItem';
+import { useAuth } from '../context/AuthContext';
 
 const SearchPage: React.FC = () => {
     const [query, setQuery] = useState('');
@@ -11,7 +12,7 @@ const SearchPage: React.FC = () => {
     const [order, setOrder] = useState('asc');
     const [result, setResult] = useState<Question[]>([]);
     const [isSearchActive, setIsSearchActive] = useState(false);
-
+    const {showToast} = useAuth()
     const debouncedQuery = useDebounce(query, 300);
 
     useEffect(() => {
@@ -29,6 +30,7 @@ const SearchPage: React.FC = () => {
                 } catch (e: any) {
                     if (e.name !== 'AbortError') {
                         console.log(e)
+                        showToast('error','Failed, Try Again Later!')
                     }
                 }
                 finally {

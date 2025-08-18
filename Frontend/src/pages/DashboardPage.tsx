@@ -6,7 +6,7 @@ import type { Question } from '../types';
 import { fetchQues } from '../api';
 
 const DashboardPage: React.FC = () => {
-    const { completedQues, setLoadingFunc, bookmarkedQues } = useAuth();
+    const { completedQues, setLoadingFunc, bookmarkedQues, showToast } = useAuth();
     const [totalQues, setTotalQues] = useState<number>(0)
     useEffect(() => {
         const loadData = async () => {
@@ -15,7 +15,7 @@ const DashboardPage: React.FC = () => {
                 const [res] = await Promise.all([fetchQues()]);
                 setTotalQues(res.questions.length)
             } catch (err) {
-                console.error(err);
+                showToast('error','Failed to fetch data. Server Error!')
             } finally {
                 setLoadingFunc(false);
             }
