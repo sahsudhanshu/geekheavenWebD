@@ -78,7 +78,6 @@ const SearchPage: React.FC = () => {
                 <p className="text-gray-500 mt-2 dark:text-gray-300">Find the exact problem you're looking for.</p>
             </header>
 
-            {/* Search and Filter Controls */}
             <div className="bg-white p-4 rounded-lg mb-8 space-y-4 md:space-y-0 md:flex md:items-center md:justify-between dark:bg-gray-950">
                 <div className="relative flex-grow">
                     <input
@@ -121,7 +120,6 @@ const SearchPage: React.FC = () => {
                 </div>
             </div>
 
-            {/* Results */}
             <div>
                 {(isSearchActive) && <p className="text-center text-gray-500">Loading results...</p>}
                 {(!isSearchActive && (query != '')) && result.length > 0 && (

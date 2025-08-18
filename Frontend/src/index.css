@@ -70,7 +70,6 @@
   animation: rotation 1s linear infinite;
 }
 
-/* Toast slide from top */
 @keyframes slideInLeft {
   from {
     transform: translateX(100%);
@@ -94,25 +93,20 @@
     stroke-dashoffset: 0;
   }
 }
-
 .animate-slideInLeft {
   animation: slideInLeft 0.25s ease-out forwards;
 }
-
 .animate-draw {
   stroke-dasharray: 100;
   stroke-dashoffset: 100;
   animation: draw 2.5s ease forwards;
 }
 
-/* Remove spinner in Chrome, Edge, Safari */
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-
-/* Remove spinner in Firefox */
 input[type=number] {
   -moz-appearance: textfield;
 }

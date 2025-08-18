@@ -1,8 +1,7 @@
 import mongoose from 'mongoose';
-import connectDB from './config/database.js';
+import connectDB from './src/config/database.js';
 import dotenv from 'dotenv';
-import axios from 'axios';
-import { Question, Category } from './models/index.js';
+import { Question, Category } from './src/models/index.js';
 dotenv.config();
 
 const MONGODB_CONNECTION_URI = process.env.MONGODB_CONNECTION_URI
@@ -14,7 +13,7 @@ const DB_NAME = process.env.DB_NAME || 'Test';
         await connectDB(MONGODB_CONNECTION_URI, DB_NAME);
         await Question.deleteMany()
         await Category.deleteMany();
-        const { data } = await axios.get('https://test-data-gules.vercel.app/data.json');
+        const data = await fetch('https://test-data-gules.vercel.app/data.json').then(res => res.json()).catch((e) => console.log(e));;
         for (const categoryData of data.data) {
             const quesValidation = categoryData.ques.filter((q) => q.title && (q.p1_link || q.p2_link))
             const ques = quesValidation.map(q => ({

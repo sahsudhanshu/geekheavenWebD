@@ -67,7 +67,6 @@ const RegisterPage: React.FC<RegisterPageProps> = ({ navigate }) => {
                 </div>
                 <form className="mt-8 space-y-6 bg-white p-8 shadow-lg rounded-lg dark:bg-gray-950" onSubmit={handleSubmit}>
                     <div className="rounded-md shadow-sm space-y-0.5">
-                        {/* Name */}
                         <div>
                             <input
                                 id="name"
@@ -81,7 +80,6 @@ const RegisterPage: React.FC<RegisterPageProps> = ({ navigate }) => {
                             {errors.name && <span className="text-red-500 dark:border-red-800 text-sm ml-1 block">{errors.name}</span>}
                         </div>
 
-                        {/* Email */}
                         <div>
                             <input
                                 id="email-address"
@@ -95,7 +93,6 @@ const RegisterPage: React.FC<RegisterPageProps> = ({ navigate }) => {
                             {errors.email && <span className="text-red-500 dark:border-red-800 text-sm ml-1 block">{errors.email}</span>}
                         </div>
 
-                        {/* Password */}
                         <div>
                             <input
                                 id="password"

@@ -9,7 +9,6 @@ if (recognition) {
     recognition.lang = 'en-US';
     recognition.interimResults = false;
 }
-
 export const useSpeechRecognition = () => {
     const [isListening, setIsListening] = useState(false)
     const [transcript, setTranscript] = useState('')
@@ -44,8 +43,6 @@ export const useSpeechRecognition = () => {
         recognition.onend = () => {
             setIsListening(false);
         };
-
-        // Cleanup function
         return () => {
             recognition.onresult = null;
             recognition.onerror = null;
