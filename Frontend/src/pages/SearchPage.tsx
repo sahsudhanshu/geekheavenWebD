@@ -1,7 +1,6 @@
 // frontend/src/pages/SearchPage.tsx
 import React, { useState, useEffect } from 'react';
 import { useDebounce } from '../hooks/useDebounce';
-import { useSpeechRecognition } from '../hooks/useSpeechReco';
 import { searchQues } from '../api';
 import type { Question } from '../types';
 import QuestionItem from '../components/QuestionItem';
@@ -14,23 +13,29 @@ const SearchPage: React.FC = () => {
     const [order, setOrder] = useState('asc');
     const [result, setResult] = useState<Question[]>([]);
     const [isSearchActive, setIsSearchActive] = useState(false);
-    const { showToast } = useAuth()
+    const { showToast, currentPage } = useAuth()
     const debouncedQuery = useDebounce(query, 300);
-    const { isListening, stopListening, startListening } = useSpeech()
+    const { isListening, stopListening, startListening, transcript, hasRecognitionSupport } = useSpeech()
 
-    //web speech APi
-    const { transcript, hasRecognitionSupport } = useSpeechRecognition()
     useEffect(() => {
-        if (transcript) {
-            if (transcript) {
-                const categoryName = transcript;
-                setQuery(categoryName);
+        if (!transcript) return;
+        if (currentPage !== 'search') return;
+        const text = transcript.toLowerCase().trim().replace('.', '');
+        if (text.startsWith('search ')) {
+            const searchTerm = text.slice(7).trim();
+            if (searchTerm && searchTerm !== query) {
+                setQuery(searchTerm);
             }
         }
     }, [transcript]);
 
 
     useEffect(() => {
+        if (!debouncedQuery) {
+            setResult([]);
+            return;
+        }
+
         const controller = new AbortController();
         const init = async () => {
             if (debouncedQuery) {
@@ -109,7 +114,7 @@ const SearchPage: React.FC = () => {
                         onChange={(e) => setSortBy(e.target.checked)}
                     />
                     <label htmlFor='sortInput' className="text-xl dark:text-gray-50">SortBy</label>
-                    <select value={order} onChange={e => setOrder(e.target.value)} className={`border rounded-lg p-2 ${!sortBy ? 'opacity-50' : ''} dark:bg-white`} disabled={!sortBy}>
+                    <select value={order} onChange={e => setOrder(e.target.value)} className={`border rounded-lg p-2 ${!sortBy ? 'opacity-50' : ''} dark:bg-gray-50`} disabled={!sortBy}>
                         <option value="asc">Ascending</option>
                         <option value="desc">Descending</option>
                     </select>

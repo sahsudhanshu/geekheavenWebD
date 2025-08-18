@@ -1,24 +1,37 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import type { NavigateFunction } from '../types';
 import { useAuth } from '../context/AuthContext';
 import ThemeButton from './ThemeButton';
 import { useSpeech } from '../context/speechContext';
 import VoiceControlButton from './mic';
 
-type NavbarProps = {
-    navigate: NavigateFunction;
-}
-
-const Navbar: React.FC<NavbarProps> = ({ navigate }) => {
+const Navbar: React.FC = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const { userInfo, logout, showToast } = useAuth()
-    const { hasRecognitionSupport } = useSpeech()
     const handleLogout = () => {
         logout();
         setIsMenuOpen(false);
         showToast('success', 'Successfully Logged Out!')
         navigate('home');
     }
+    const { userInfo, logout, showToast, navigate, currentPage } = useAuth()
+    const { transcript, hasRecognitionSupport } = useSpeech()
+
+    useEffect(() => {
+        if (!transcript) return;
+        const text = transcript.toLowerCase().trim().replace('.', '');
+        if (text.startsWith('open ')) {
+            const pageName = text.slice(5).trim();
+            const validPages = ['home', 'dashboard', 'login', 'register', 'search'];
+            if (pageName && validPages.includes(pageName) && currentPage !== pageName) {
+                navigate(pageName);
+            }
+        }
+        if (text === 'user logout') {
+            if (userInfo) {
+                handleLogout()
+            }
+        }
+    }, [transcript]);
 
     return (
         <nav className="bg-white shadow-md sticky top-0 z-50 dark:bg-gray-950">

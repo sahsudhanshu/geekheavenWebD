@@ -19,6 +19,8 @@ export interface AuthContextType {
     setLoadingFunc: (loading: boolean) => void;
     loading: boolean;
     showToast: (type: "success" | "error" | "info", msg: string) => void;
+    currentPage: string;
+    navigate: (page: Page) => void;
 }
 export interface Question {
     _id: string;

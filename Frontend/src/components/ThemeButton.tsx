@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { useSpeech } from "../context/speechContext";
+import { useAuth } from "../context/AuthContext";
 
 const ThemeButton: React.FC = () => {
     const [theme, setTheme] = useState<"light" | "dark">(() => {
@@ -19,9 +21,26 @@ const ThemeButton: React.FC = () => {
         }
         localStorage.setItem("theme", theme);
     }, [theme]);
+
     const toggleTheme = () => {
         setTheme(theme === "dark" ? "light" : "dark");
     };
+    const { showToast } = useAuth()
+    const { transcript } = useSpeech()
+
+    useEffect(() => {
+        if (!transcript) return;
+        const text = transcript.toLowerCase().trim().replace('.', '');
+        if (text === 'light theme') {
+            if (theme === 'light') return;
+            setTheme('light')
+            showToast('success', 'Theme Changed!')
+        } else if (text === 'dark theme') {
+            if (theme === 'dark') return;
+            setTheme('dark')
+            showToast('success', 'Theme Changed!')
+        }
+    }, [transcript]);
 
     return (
         <button

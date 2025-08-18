@@ -10,10 +10,6 @@ const PORT = process.env.PORT || 3000;
 const MONGODB_CONNECTION_URI = process.env.MONGODB_CONNECTION_URI
 const DB_NAME = process.env.DB_NAME || 'Test'
 
-app.get('/', (req, res) => {
-    res.send("API is running")
-})
-
 app.use(cors())
 app.use(express.json());
 app.use('/api/v1/questions', questionsRoute)

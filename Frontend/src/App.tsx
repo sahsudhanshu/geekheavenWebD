@@ -108,10 +108,10 @@ function App() {
     setToast({ message: msg, type });
   };
   return (
-    <AuthContextProvider value={{ userInfo, login, logout, toggleCompleted, toggleBookmark, completedQues, bookmarkedQues, setLoadingFunc, loading, showToast }} >
+    <AuthContextProvider value={{ userInfo, login, logout, toggleCompleted, toggleBookmark, completedQues, bookmarkedQues, setLoadingFunc, loading, showToast, currentPage, navigate }} >
       <SpeechContextProvider value={useSpeechRecognition()}>
         <div className="min-h-screen">
-          <Navbar navigate={navigate} />
+          <Navbar />
           <Background />
           {toast && (
             <Toast

@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import type { Category, Question } from '../types';
 import QuestionBox from './QuestionBox';
+import { useAuth } from '../context/AuthContext';
+import { useSpeech } from '../context/speechContext';
 type CategoriesProps = {
     categories: Category[];
     questions: Question[];
@@ -17,6 +19,42 @@ const Categories: React.FC<CategoriesProps> = ({ categories, questions }) => {
     const toggleCategory = (categoryId: string) => {
         setOpenCategoryId(prevId => (prevId === categoryId ? null : categoryId));
     };
+
+    const { currentPage } = useAuth()
+    const { transcript } = useSpeech()
+
+    useEffect(() => {
+        if (!transcript) return;
+        if (currentPage !== 'home') return;
+        const text = transcript.toLowerCase().trim().replace('.', '');
+        if (text === 'next category') {
+            setCategoryPage(prev => Math.min(prev + 1, totalPages))
+        } else if (text === 'previous category') {
+            setCategoryPage(prev => Math.max(prev - 1, 1))
+        } else if (text.startsWith('set categories per page to ')) {
+            const number = Number(text.slice(26))
+            if (!isNaN(number)) {
+                setLimitCategory(number)
+            }
+        } else if (text === 'open first category') {
+            setOpenCategoryId(categories[0]._id || null)
+        } else if (text === 'open last category') {
+            setOpenCategoryId(categories[categoryStartIndex + limitCategory - 1]._id || null)
+        } else if (text === 'open next category' && openCategoryId) {
+            const idx = categories.findIndex(cat => cat._id === openCategoryId);
+            if (idx !== -1 && idx < categories.length - 1) {
+                setOpenCategoryId(categories[idx + 1]._id);
+            }
+        } else if (text === 'open previous category' && openCategoryId) {
+            const idx = categories.findIndex(cat => cat._id === openCategoryId);
+            if (idx > 0) {
+                setOpenCategoryId(categories[idx - 1]._id);
+            }
+        } else if (text === 'close category' && openCategoryId){
+            setOpenCategoryId(null)
+        } 
+    }, [transcript]);
+
     return (
         <div className="w-full max-w-4xl mx-auto border border-gray-200 rounded-lg bg-white shadow-sm dark:border-gray-950 dark:bg-gray-950" >
             {currentPageCategories.map((category) => {

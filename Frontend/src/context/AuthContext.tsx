@@ -1,5 +1,5 @@
 import React, { createContext, useContext } from "react";
-import type { AuthContextType, UserInfo } from "../types";
+import type { AuthContextType, Page, UserInfo } from "../types";
 
 const AuthContext = createContext<AuthContextType>({
     userInfo: null,
@@ -11,7 +11,9 @@ const AuthContext = createContext<AuthContextType>({
     bookmarkedQues: [],
     loading: false,
     setLoadingFunc: (set: boolean) => { },
-    showToast: (type: "success" | "error" | "info", msg: string) => { }
+    showToast: (type: "success" | "error" | "info", msg: string) => { },
+    currentPage: '',
+    navigate: (page: Page) => { }
 });
 
 export const useAuth = () => {
