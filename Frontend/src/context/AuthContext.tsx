@@ -1,20 +1,7 @@
 import React, { createContext, useContext } from "react";
-import type { AuthContextType, Page, UserInfo } from "../types";
+import type { AuthContextType } from "../types";
 
-const AuthContext = createContext<AuthContextType>({
-    userInfo: null,
-    login: (userData: UserInfo) => { },
-    logout: () => { },
-    toggleBookmark: (questionId: string) => { },
-    toggleCompleted: (questionId: string) => { },
-    completedQues: [],
-    bookmarkedQues: [],
-    loading: false,
-    setLoadingFunc: (set: boolean) => { },
-    showToast: (type: "success" | "error" | "info", msg: string) => { },
-    currentPage: '',
-    navigate: (page: Page) => { }
-});
+const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 
 export const useAuth = () => {
     return useContext(AuthContext);

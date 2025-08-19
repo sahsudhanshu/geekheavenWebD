@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import type { NavigateFunction } from '../types';
 import { useAuth } from '../context/AuthContext';
 import ThemeButton from './ThemeButton';
 import { useSpeech } from '../context/speechContext';
 import VoiceControlButton from './mic';
+import type { Page } from '../types';
 
 const Navbar: React.FC = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -23,7 +23,7 @@ const Navbar: React.FC = () => {
             const pageName = text.slice(5).trim();
             const validPages = ['home', 'dashboard', 'login', 'register', 'search'];
             if (pageName && validPages.includes(pageName) && currentPage !== pageName) {
-                navigate(pageName);
+                navigate(pageName as Page);
             }
         }
         if (text === 'user logout') {
